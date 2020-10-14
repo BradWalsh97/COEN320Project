@@ -1,0 +1,24 @@
+/*
+ * Process.h
+ *
+ *  Created on: 14-Oct-2020
+ *      Author: johna
+ */
+
+#ifndef PROCESS_H_
+#define PROCESS_H_
+
+class Process {
+private:
+	int count = 0;
+	const int LIMIT = 10;
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_cond_t condvar = PTHREAD_COND_INITIALIZER;
+public:
+	Process();
+
+	void *consumer(void *nonused);
+	void *producer(void *nonused);
+};
+
+#endif /* PROCESS_H_ */

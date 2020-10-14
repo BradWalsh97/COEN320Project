@@ -1,0 +1,48 @@
+/*
+ * Process.cpp
+ *
+ *  Created on: 14-Oct-2020
+ *      Author: johna
+ */
+
+#include <iostream>
+#include <pthread.h>
+#include "Process.h"
+
+Process::Process() {
+	count = 0;
+	mutex = PTHREAD_MUTEX_INITIALIZER;
+	condvar = PTHREAD_COND_INITIALIZER;
+
+}
+
+void *Process::consumer(void *nonused){
+	while(1){
+			pthread_mutex_lock(&mutex);
+			std::cout<<"In consumer thread..."<<std::endl;;
+			while(count == 0){
+				pthread_cond_wait(&condvar, &mutex);
+			}
+			//process data
+			count--;
+			std::cout<<"consumed consumed data, count is "<<count<<std::endl;
+			sleep(1);
+			pthread_cond_signal(&condvar);
+			pthread_mutex_unlock(&mutex);
+		}
+}
+
+void *Process::producer(void *nonused){
+	while(1){
+			pthread_mutex_lock(&mutex);
+			std::cout<<"In producer thread..."<<std::endl;
+			while(count == LIMIT){
+				pthread_cond_wait(&condvar, &mutex);
+			}
+			count++;
+			std::cout<<"producer produced data, count is "<<count<<std::endl;
+			sleep(1);
+			pthread_cond_signal(&condvar);
+			pthread_mutex_unlock(&mutex);
+		}
+}

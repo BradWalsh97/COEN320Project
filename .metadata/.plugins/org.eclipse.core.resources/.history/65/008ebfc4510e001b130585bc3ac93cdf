@@ -1,0 +1,16 @@
+#include <cstdlib>
+#include <iostream>
+#include <pthread.h>
+#include "Process.h"
+
+int main(int argc, char *argv[]) {
+		Process process;
+		std::cout<<"Starting consumer/producer example..."<<std::endl;
+		for(;;){
+		    // create the producer and consumer threads
+		    process.start(*process.producer);
+		    //pthread_join(pid, NULL);
+		    //pthread_join(cid, NULL);
+		}
+	return EXIT_SUCCESS;
+}

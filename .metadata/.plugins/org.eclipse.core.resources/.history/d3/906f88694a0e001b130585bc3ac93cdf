@@ -1,0 +1,19 @@
+#include <cstdlib>
+#include <iostream>
+#include <pthread.h>
+#include "Process.cpp"
+
+int main(int argc, char *argv[]) {
+		Process process;
+		pthread_t pid;
+		pthread_t cid;
+		printf ("Starting consumer/producer example...\n");
+		while(1){
+		    // create the producer and consumer threads
+		    pthread_create (&pid, NULL, process.producer, NULL);
+		    pthread_create (&cid, NULL, process.consumer, NULL);
+		    //pthread_join(pid, NULL);
+		    //pthread_join(cid, NULL);
+		}
+	return EXIT_SUCCESS;
+}

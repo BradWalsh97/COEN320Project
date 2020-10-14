@@ -1,0 +1,44 @@
+/*
+ * Process.cpp
+ *
+ *  Created on: 14-Oct-2020
+ *      Author: johna
+ */
+
+#include "Process.h"
+
+Process::Process() {
+	// TODO Auto-generated constructor stub
+
+}
+
+void Process::consumer(void *nonused){
+	while(1){
+			pthread_mutex_lock(&mutex);
+			printf("In consumer thread...\n");
+			while(count == 0){
+				pthread_cond_wait(&condvar, &mutex);
+			}
+			//process data
+			count--;
+			printf("consumed consumed data, count is %d\n", count);
+			sleep(1);
+			pthread_cond_signal(&condvar);
+			pthread_mutex_unlock(&mutex);
+		}
+}
+
+void Process::producer(void *nonused){
+	while(1){
+			pthread_mutex_lock(&mutex);
+			printf("In producer thread...\n");
+			while(count == LIMIT){
+				pthread_cond_wait(&condvar, &mutex);
+			}
+			count++;
+			printf("producer produced data, count is %d\n", count);
+			sleep(1);
+			pthread_cond_signal(&condvar);
+			pthread_mutex_unlock(&mutex);
+		}
+}

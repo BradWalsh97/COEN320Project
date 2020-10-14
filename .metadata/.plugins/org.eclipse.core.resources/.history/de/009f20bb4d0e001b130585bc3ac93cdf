@@ -1,0 +1,24 @@
+/*
+ * Process.h
+ *
+ *  Created on: 14-Oct-2020
+ *      Author: johna
+ */
+
+#include <pthread.h>
+
+#ifndef PROCESS_H_
+#define PROCESS_H_
+
+class Process {
+private:
+	static int count;
+	const static int LIMIT = 10;
+public:
+	Process();
+
+	static void *consumer(void *nonused);
+	static void *producer(void *nonused);
+};
+
+#endif /* PROCESS_H_ */
