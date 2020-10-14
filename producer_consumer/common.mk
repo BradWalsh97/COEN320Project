@@ -9,11 +9,6 @@ include $(QCONFIG)
 
 USEFILE=
 
-# Next lines are for C++ projects only
-EXTRA_SUFFIXES+=cxx cpp
-LDFLAGS+=-lang-c++
-VFLAG_g=-gstabs+
-
 include $(MKFILES_ROOT)/qmacros.mk
 ifndef QNX_INTERNAL
 QNX_INTERNAL=$(PROJECT_ROOT)/.qnx_internal.mk
